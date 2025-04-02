@@ -1,0 +1,288 @@
+{% extends 'ecommerce/includes/main.html' %}
+{% load static %}
+
+{% block title %}{{product.name}}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ecommerce/details.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="product-details-container">
+        <div class="breadcrumb">
+            <a href="{% url 'ecommerce:home' %}">Home</a> 
+            <a href="{% url 'ecommerce:product_details' product.category.slug %}">{{ product.category.name }}</a>
+            <span>{{product.name}}</span>
+        </div>
+
+        <div class="product-main-section">
+            <div class="product-gallery">
+                <div class="main-image">
+                    {% with primary_image=product.images.all|dictsort:"is_primary"|last %}
+                        {% if primary_image %}
+                            <img src="{{ primary_image.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="/api/placeholder/600/400" alt="{{ product.name }}">
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="thumbnail-gallery">
+                    {% for image in product.images.all %}
+                        <input type="radio" id="thumb{{ forloop.counter }}" name="thumbnail" {% if forloop.first %}checked{% endif %}>
+                        <label for="thumb{{ forloop.counter }}">
+                            <img src="{{ image.image.url }}" alt="{{ image.alt_text }}">
+                        </label>
+                    {% empty %}
+                        {% for i in '1234'|make_list %}
+                            <input type="radio" id="thumb{{ forloop.counter }}" name="thumbnail" {% if forloop.first %}checked{% endif %}>
+                            <label for="thumb{{ forloop.counter }}">
+                                <img src="/api/placeholder/150/100" alt="Laptop Angle {{ forloop.counter }}">
+                            </label>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1>{{product.name}}</h1>
+                <div class="rating">
+                    <div class="stars">
+                        {% for i in '12345'|make_list %}
+                            {% if forloop.counter <= product.rating %}
+                                <i class="fas fa-star"></i>
+                            {% elif forloop.counter <= product.rating|add:0.5 %}
+                                <i class="fas fa-star-half-alt"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="review-count">({{ product.review_count }} Reviews)</span>
+                </div>
+
+                <div class="price-section">
+                    <p class="current-price">${{ product.price }}</p>
+                    <p class="tax-info">Tax included. Shipping calculated at checkout.</p>
+                </div>
+
+                <div class="product-description">
+                    <h3>Product Description</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+
+                <div class="product-options">
+                    <div class="color-selection">
+                        <h3>Color</h3>
+                        <div class="color-swatches">
+                            {% for color in product.get_color_list %}
+                                <input type="radio" id="{{ color }}" name="color" {% if forloop.first %}checked{% endif %}>
+                                <label for="{{ color }}" class="color-swatch" data-color="{{ color }}"></label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="storage-selection">
+                        <h3>Storage</h3>
+                        <div class="storage-options">
+                            {% for storage in product.get_storage_list %}
+                                <input type="radio" id="storage-{{ storage|lower }}" name="storage" {% if forloop.first %}checked{% endif %}>
+                                <label for="storage-{{ storage|lower }}" class="storage-btn">{{ storage }} SSD</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if product.in_stock %}
+                <div class="purchase-actions">
+                    <div class="quantity-selector">
+                        <a href="#" class="qty-btn decrease">-</a>
+                        <input type="number" value="1" min="1" max="10" class="qty-input">
+                        <a href="#" class="qty-btn increase">+</a>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                    <button class="buy-now">Buy Now</button>
+                </div>
+                {% else %}
+                <div class="out-of-stock">
+                    <p>This product is currently out of stock</p>
+                    <button class="notify-btn">Notify Me When Available</button>
+                </div>
+                {% endif %}
+
+                <div class="product-features">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li>{{ product.processor }}</li>
+                        <li>{{ product.ram }}</li>
+                        <li>{{ product.graphics }}</li>
+                        <li>{{ product.display }}</li>
+                        <li>Windows 11 Pro</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <section class="product-details-extended">
+            <div class="tabs">
+                <input type="radio" id="tab-specs" name="tabs" checked>
+                <label for="tab-specs" class="tab-btn">Specifications</label>
+                
+                <input type="radio" id="tab-reviews" name="tabs">
+                <label for="tab-reviews" class="tab-btn">Reviews</label>
+                
+                <div class="tab-content" id="specs-tab">
+                    <h3>Full Technical Specifications</h3>
+                    <table>
+                        <tr>
+                            <td>Processor</td>
+                            <td>{{ product.processor }}</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>{{ product.ram }}</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>{{ product.storage }}</td>
+                        </tr>
+                        <tr>
+                            <td>Display</td>
+                            <td>{{ product.display }}</td>
+                        </tr>
+                        <tr>
+                            <td>Graphics</td>
+                            <td>{{ product.graphics }}</td>
+                        </tr>
+                        <tr>
+                            <td>Connectivity</td>
+                            <td>{{ product.connectivity }}</td>
+                        </tr>
+                        <tr>
+                            <td>Battery</td>
+                            <td>{{ product.battery }}</td>
+                        </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td>{{ product.weight }}</td>
+                        </tr>
+                        <tr>
+                            <td>Dimensions</td>
+                            <td>{{ product.dimensions }}</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="tab-content" id="reviews-tab">
+                    <h3>Customer Reviews</h3>
+                    <div class="review-summary">
+                        <div class="avg-rating">{{ product.rating }}</div>
+                        <div class="rating-bars">
+                            {% for star, percentage in review_stats.items %}
+                                <div class="rating-bar">
+                                    <span>{{ star }} Stars</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: {{ percentage }}%"></div>
+                                    </div>
+                                    <span>{{ percentage }}%</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="reviews-list">
+                        {% for review in top_reviews %}
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <h4>{{ review.name }}</h4>
+                                    <div class="review-rating">
+                                        {% for i in '12345'|make_list %}
+                                            {% if forloop.counter <= review.rating %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <span class="review-date">{{ review.created_at|date:"F j, Y" }}</span>
+                                </div>
+                                <p>{{ review.comment }}</p>
+                            </div>
+                        {% empty %}
+                            <p>No reviews yet. Be the first to review this product!</p>
+                        {% endfor %}
+                        
+                        {% if product.review_count > 5 %}
+                            <button class="load-more">Load More Reviews</button>
+                        {% endif %}
+                        
+                        <!-- Review Form -->
+                        <div class="review-form-container">
+                            <h3>Write a Review</h3>
+                            <form id="review-form" action="{% url 'store:add_review' product.slug %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Your Email</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Your Rating</label>
+                                    <div class="rating-selector">
+                                        {% for i in '12345'|make_list %}
+                                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" {% if forloop.last %}checked{% endif %}>
+                                            <label for="star{{ i }}"><i class="far fa-star"></i></label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Your Review</label>
+                                    <textarea id="comment" name="comment" rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-review">Submit Review</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="related-products">
+            <h2>You May Also Like</h2>
+            <div class="product-grid">
+                {% for  related in related_products %}
+                    <div class="product-card">
+                        {% with primary_image=related.images.all|dictsort:"is_primary"|last %}
+                            {% if primary_image %}
+                                <img src="{{ primary_image.image.url }}" alt="{{ related.name }}">
+                            {% else %}
+                                <img src="/api/placeholder/400/300" alt="{{ related.name }}">
+                            {% endif %}
+                        {% endwith %}
+                        <div class="product-info">
+                            <h3>
+                                <a href="{% url 'ecommerce:product_details' related.slug %}">{{ related.name }}</a>
+                            </h3>
+                            <div class="rating">
+                                {% for i in '12345'|make_list %}
+                                    {% if forloop.counter <= related.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% elif forloop.counter <= related.rating|add:0.5 %}
+                                        <i class="fas fa-star-half-alt"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="price">${{ related.price }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No related products found.</p>
+                {% endfor %}
+            </div>
+        </section>
+</main>
+{% endblock %}

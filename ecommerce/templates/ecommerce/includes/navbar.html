@@ -1,0 +1,20 @@
+<!-- navbar.html -->
+<header>
+    <nav>
+        <div class="logo">
+            <h1>{{store_title}}</h1>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'ecommerce:product_list' %}" class="active">Home</a>
+            <a href="#">Products</a>
+            <a href="#">Categories</a>
+            <a href="{% url 'ecommerce:account' %}">Account</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#"><i class="fas fa-search"></i></a>
+            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">3</span></a>
+        </div>
+    </nav>
+</header>

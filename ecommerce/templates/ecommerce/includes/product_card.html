@@ -1,0 +1,37 @@
+
+{% load static %}
+<div class="product-grid">
+    <div class="product-card">
+        <div class="product-img-container">
+            {% if feature.image %}
+            <img class="feature-image" src="{{feature.image.url}}" alt="{{ feature.name }}">
+            {% else %}
+            <img class="feature-image" src="{% static 'images/apple.jpg' %}" alt="No Image Available">
+            {% endif %}
+        </div>
+        <div class="product-info">
+            <h3 class="product-title">{{ feature.name }}</h3>
+            <div class="rating">
+                {% if feature.rating %}
+                {% for i in "12345" %}
+                    {% if forloop.counter <= feature.rating %}
+                        <i class="fas fa-star active"></i>
+                    {% else %}
+                        <i class="far fa-star inactive"></i>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                    <span class="no-rating">No rating available</span>
+                {% endif %}
+            </div>
+            <p class="price">
+                {% if feature.price %}
+                    ${{ feature.price }}
+                {% else %}
+                    <span class="price-unavailable">Price Not Available</span>
+                {% endif %}
+            </p>
+            <a href="{% url 'ecommerce:product_details' feature.id %}" class="btn view-details">View Details</a>
+        </div>
+    </div>
+</div>

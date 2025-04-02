@@ -1,0 +1,34 @@
+<!-- home.html -->
+{% extends 'ecommerce/includes/base.html' %}
+
+{% block title %}Home-{{store_title}}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h2>Next Gen Tech</h2>
+        <p>Discover the latest in technology and electronics</p>
+        <button class="cta-button">Shop Now</button>
+    </div>
+</section>
+
+<!-- Include the Featured Categories Section -->
+{% include 'ecommerce/includes/featured_categories.html' %}
+
+<section class="featured-products">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+        {% for feature in features %}
+            {% include 'ecommerce/includes/product_card.html' %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="promotional-banner">
+    <div class="promo-content">
+        <h2>Limited Time Offer</h2>
+        <p>Get 20% off on all premium audio devices</p>
+        <button class="cta-button">Shop Now</button>
+    </div>
+</section>
+{% endblock %}
