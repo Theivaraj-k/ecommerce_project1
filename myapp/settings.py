@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)q(1lsp_hw4*q(u#4o4qsph2)bktq)c-(p2!7h979ua9*ur4-(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,17 +74,17 @@ WSGI_APPLICATION = 'myapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME':'ecommerce',
-#        'USER': 'root',
-#        'PASSWORD':'12345',
-#        'HOST':'localhost',
-#        'PORT':'3306',
-#       
-#    }
-#}
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME':'ecommerce',
+       'USER': 'root',
+       'PASSWORD':'12345',
+       'HOST':'localhost',
+       'PORT':'3306',
+       
+   }
+}
 
 
 # Password validation
@@ -134,6 +134,5 @@ STATICSTORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 

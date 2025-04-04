@@ -218,7 +218,7 @@
                         <!-- Review Form -->
                         <div class="review-form-container">
                             <h3>Write a Review</h3>
-                            <form id="review-form" action="{% url 'store:add_review' product.slug %}" method="post">
+                            <form id="review-form" action="{% url 'ecommerce:add_review' product.slug %}" method="post">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="name">Your Name</label>

@@ -11,6 +11,11 @@
 <body>
     <!-- Header partial -->
     {%include  'ecommerce/includes/navbar.html' %}
+
+
+    {% block extra_css %}
+<link rel="stylesheet" href="{% static 'ecommerce/account.css' %}">
+    {% endblock %}
     
     <!-- Main Content -->
     <main class="main-content">
