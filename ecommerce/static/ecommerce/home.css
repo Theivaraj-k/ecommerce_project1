@@ -67,27 +67,23 @@
     align-items: center;
     padding: 1rem 5%;
     max-width: 2000px;
-    background-color: #ffffff;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     
-    /* 3D Effect Enhancements */
+    /* 3D Effect Enhancements (simplified) */
     box-shadow: 
-        0 4px 6px rgba(0, 0, 0, 0.1),      /* Bottom shadow for depth */
-        0 8px 15px rgba(0, 0, 0, 0.05);    /* Softer, wider shadow */
+        0 4px 6px rgba(0, 0, 0, 0.1),
+        0 8px 15px rgba(0, 0, 0, 0.05);
     
-    /* Subtle gradient to enhance 3D perception */
+    /* Simplified background */
     background: linear-gradient(to bottom, #f8f9fa, #ffffff);
     
-    /* Optional: slight perspective and transform for 3D feel */
-    perspective: 1000px;
-    transform: translateZ(-1px) scale(1.01);
-    transition: transform 0.3s ease;
+    /* Remove problematic 3D transforms */
+    transition: all 0.3s ease;
 }
 
-/* Hover effect for additional 3D interaction */
+/* Simplified hover effect */
 nav:hover {
-    transform: translateZ(-1px) scale(1.02);
     box-shadow: 
         0 6px 8px rgba(0, 0, 0, 0.15),
         0 10px 20px rgba(0, 0, 0, 0.1);
@@ -119,15 +115,14 @@ nav:hover {
     font-weight: 500;
     padding: 0.5rem 0;
     position: relative;
-    /* 3D Link Effect */
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease;
-  }
-  
-  .nav-links a:hover, .nav-links a.active {
+    /* Remove the problematic 3D transform properties */
+    transition: color var(--transition-speed) ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
     color: var(--primary-color);
-    transform: translateZ(5px);
-  }
+    /* Remove the transformZ that's causing issues */
+}
   
   .nav-links a::after {
     content: '';

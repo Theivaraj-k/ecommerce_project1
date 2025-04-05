@@ -1,41 +1,29 @@
+
+{% extends 'ecommerce/includes/base.html' %}
+
+
+{% block title %}My Account | ShopEasy{% endblock %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'account.css' %}">
+{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account | ShopEasy</title>
-    <link rel="stylesheet" href="{% static 'ecommerce/account.css' %}">
-</head>
-<body>
-    <!-- Header partial -->
-    {%include  'ecommerce/includes/navbar.html' %}
-
-
-    {% block extra_css %}
-<link rel="stylesheet" href="{% static 'ecommerce/account.css' %}">
-    {% endblock %}
-    
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <div class="account-header">
-                <h1>My Account</h1>
-                <p class="welcome-message">Welcome back, John Doe!</p>
-            </div>
-
-            <div class="dashboard">
-                <!-- Sidebar Navigation partial -->
-                {%include 'ecommerce/includes/sidebar.html' %}
-                
-                <!-- Account Content partial -->
-                {%include 'ecommerce/includes/Content.html' %}
-            </div>
+{% block content %}
+<main class="main-content">
+    <div class="container">
+        <div class="account-header">
+            <h1>My Account</h1>
+            <p class="welcome-message">Welcome back, John Doe!</p>
         </div>
-    </main>
 
-    <!-- Footer partial -->
-    {%include 'ecommerce/includes/footer.html' %}
-</body>
-</html>
+        <div class="dashboard">
+            <!-- Sidebar Navigation partial -->
+            {% include 'ecommerce/includes/sidebar.html' %}
+           
+
+            <!-- Account Content partial -->
+           {% include 'ecommerce/includes/Content.html' %}
+    </div>
+</div>
+</main>
+{% endblock %}
